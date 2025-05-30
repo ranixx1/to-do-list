@@ -9,35 +9,37 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
-    private final TaskService TaskService;
+   
+    private final TaskService taskService;
     
-    public TaskController(TaskService TaskService){
-        this.TaskService = TaskService;
+    public TaskController(TaskService taskService){
+        this.taskService = taskService; 
     }
 
     @GetMapping
     public String listTasks(Model model){
-        model.addAttribute("tasks", TaskService.findAll());
+        model.addAttribute("tasks", taskService.findAll()); 
         model.addAttribute("newTask", new Task());
         return "tasks";
     }
 
     @PostMapping
     public String addTask(@ModelAttribute Task task){
-        TaskService.save(task);
+        taskService.save(task);
         return "redirect:/tasks";
     }
 
-    @PostMapping("/ {id}/toggle")
+
+    @PostMapping("/{id}/toggle")
     public String toggleTask(@PathVariable Long id){
-        TaskService.toggleTaskCompletion(id);
+        taskService.toggleTaskCompletion(id); 
         return "redirect:/tasks";
     }
 
-    @PostMapping("/ {id}/delete")
+    
+    @PostMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id){
-        TaskService.deleteById(id);
+        taskService.deleteById(id); 
         return "redirect:/tasks";
     }
-}    
-
+}
