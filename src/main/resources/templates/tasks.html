@@ -1,4 +1,3 @@
-<!-- src/main/resources/templates/tasks.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -27,8 +26,9 @@
                     </button>
                 </form>
                 <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                    <button type="submit" class="btn btn-sm btn-danger me-2">Excluir</button>
                 </form>
+                <a th:href="@{/tasks/{id}/detail(id=${task.id})}" class="btn btn-sm btn-info">Detalhar</a>
             </div>
         </li>
     </ul>
