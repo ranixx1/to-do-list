@@ -5,6 +5,8 @@ import com.example.to_do_list.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 @Controller
 @RequestMapping("/tasks")
@@ -41,5 +43,12 @@ public class TaskController {
     public String deleteTask(@PathVariable Long id){
         taskService.deleteById(id); 
         return "redirect:/tasks";
+    }
+     @GetMapping("/{id}/detail") 
+    public String viewTask(@PathVariable Long id, Model model){ 
+        Task task = taskService.findById(id) 
+                               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
+        model.addAttribute("task", task);
+        return "task-detail";
     }
 }
